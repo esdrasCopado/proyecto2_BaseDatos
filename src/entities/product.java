@@ -61,7 +61,7 @@ public class product implements Serializable {
     }
     
     @Column(nullable = false)
-    String name;
+    private String name;
     
     public void setName(String name){
         this.name=name;
@@ -71,7 +71,7 @@ public class product implements Serializable {
     }
     
     @Column(nullable = false)
-    float price;
+    private float price;
     
     public void setPrice(float price){
         this.price=price;
@@ -81,7 +81,7 @@ public class product implements Serializable {
     }
     
     @Column(nullable=false)
-    int stock;
+    private int stock;
     
     public void setStock(int stock){
         this.stock=stock;
@@ -103,7 +103,8 @@ public class product implements Serializable {
     public void setCategory(Category categoryID) {
         this.categoryID = categoryID;
     }
-    @JoinColumn(name="name")
+    
+    
     
     
     

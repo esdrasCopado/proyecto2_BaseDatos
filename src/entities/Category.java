@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,13 +50,13 @@ public class Category implements Serializable {
     
     @OneToMany(mappedBy= "categoryID")
     @JoinColumn()
-    Collection <product> product;
+    List <product> product;
 
-    public Collection<product> getProduct() {
+    public List<product> getProduct() {
         return product;
     }
 
-    public void setProduct(Collection<product> product) {
+    public void setProduct(List<product> product) {
         this.product = product;
     }
     
