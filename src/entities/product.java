@@ -6,26 +6,36 @@
 package entities;
 
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.util.Iterator;
+import java.util.List;
+import javafx.scene.control.ComboBox;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.Persistence;
+import javax.swing.JComboBox;
+
 
 /**
  *
  * @author copad
  */
 @Entity
-public class product implements Serializable {
+public class product implements Serializable  {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
+    
 
     public Integer getId() {
         return id;
@@ -103,6 +113,8 @@ public class product implements Serializable {
     public void setCategory(Category categoryID) {
         this.categoryID = categoryID;
     }
+    
+   
     
     
     

@@ -5,9 +5,11 @@
         <group>
             <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/entities/product.java</file>
             <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/Windows/windowProvider.java</file>
+            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/Windows/window.java</file>
             <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/entities/Category.java</file>
-            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/Windows/windowCategory.java</file>
             <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/entities/Sale.java</file>
+            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/Windows/windowProduct.java</file>
+            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/entities/Provider.java</file>
             <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/proyecto2/Proyecto2.java</file>
         </group>
     </open-files>
