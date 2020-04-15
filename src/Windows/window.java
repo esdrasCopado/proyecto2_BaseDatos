@@ -31,7 +31,7 @@ public class window extends javax.swing.JFrame {
 
         BotonCategory = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonSale = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         BotonProvider = new javax.swing.JButton();
 
@@ -51,7 +51,12 @@ public class window extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("jButton1");
+        jButtonSale.setText("Sale");
+        jButtonSale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSaleActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("jButton1");
 
@@ -70,10 +75,13 @@ public class window extends javax.swing.JFrame {
                 .addContainerGap(167, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton4)
-                    .addComponent(jButton3)
                     .addComponent(BotonCategory)
                     .addComponent(BotonProvider)
-                    .addComponent(jButton2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(6, 6, 6)
+                            .addComponent(jButtonSale))
+                        .addComponent(jButton2)))
                 .addGap(152, 152, 152))
         );
         layout.setVerticalGroup(
@@ -86,7 +94,7 @@ public class window extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(jButtonSale)
                 .addGap(18, 18, 18)
                 .addComponent(jButton4)
                 .addContainerGap(35, Short.MAX_VALUE))
@@ -120,6 +128,13 @@ public class window extends javax.swing.JFrame {
         product.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButtonSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaleActionPerformed
+       windowSale sale=new windowSale();
+       sale.setVisible(true);
+       sale.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+       sale.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButtonSaleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -129,7 +144,7 @@ public class window extends javax.swing.JFrame {
     private javax.swing.JButton BotonCategory;
     private javax.swing.JButton BotonProvider;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonSale;
     // End of variables declaration//GEN-END:variables
 }

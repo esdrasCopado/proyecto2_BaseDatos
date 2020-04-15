@@ -10,10 +10,17 @@ import Windows.windowCategory;
 import Windows.windowProvider;
 
 import entities.Category;
-import entities.Sale;
+
 import entities.product;
 import java.awt.ComponentOrientation;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -30,11 +37,17 @@ public class Proyecto2 {
      */
     public static void main(String[] args) {
 
-        window ventana=new window();
+       
+            window ventana=new window();
+            
+            ventana.setVisible(true);
+            ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            ventana.setLocationRelativeTo(null);
+            
+
+ 
         
-        ventana.setVisible(true);
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setLocationRelativeTo(null);
+
             
     
     }
