@@ -7,7 +7,7 @@ package Windows;
 
 import entities.Category;
 import entities.Provider;
-import entities.product;
+import entities.Product;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -27,7 +27,7 @@ public class windowProduct extends javax.swing.JFrame {
 
     EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("Proyecto2PU");
     EntityManager entityManager = managerFactory.createEntityManager();
-    private product pro=new product();
+    private Product pro=new Product();
     /**
      * Creates new form windowProduct
      */
@@ -236,7 +236,7 @@ public class windowProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       product product=new product();
+       Product product=new Product();
         product.setName(jTextName.getText());
         product.setPrice(Float.parseFloat(jTextPrecio.getText()));
         product.setStock(Integer.parseInt(jTextStock.getText()));

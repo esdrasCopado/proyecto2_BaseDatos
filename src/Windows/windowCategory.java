@@ -5,6 +5,7 @@
  */
 package Windows;
 
+import persistence.*;
 import entities.Category;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -119,16 +120,15 @@ public class windowCategory extends javax.swing.JFrame {
     }//GEN-LAST:event_jTNombreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        EntityManagerFactory managerFactory=Persistence.createEntityManagerFactory("Proyecto2PU");
-        EntityManager entityManager=managerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
+       
+        EntityManageRepository entityManage=new EntityManageRepository();
 
+        CategoryRepositoryImp categoryRepository=new CategoryRepositoryImp(entityManage.getEntityManager());
         Category category=new Category();
         category.setName(jTNombre.getText());
         category.setDescription(jTDescripcion.getText());
-
-        entityManager.persist(category);
-        entityManager.getTransaction().commit();
+        categoryRepository.Save(category);
+        categoryRepository.commit();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

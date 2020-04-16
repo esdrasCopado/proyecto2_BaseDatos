@@ -6,67 +6,60 @@
 package entities;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.util.Iterator;
 import java.util.List;
-import javafx.scene.control.ComboBox;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.Persistence;
-import javax.swing.JComboBox;
-
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author copad
  */
 @Entity
-public class product extends EntityBase implements Serializable  {
+public class Product extends EntityBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Column(nullable = false)
     private String name;
-    
-    public void setName(String name){
-        this.name=name;
+
+    public void setName(String name) {
+        this.name = name;
     }
-    public String getName(){
+
+    public String getName() {
         return name;
     }
-    
+
     @Column(nullable = false)
     private float price;
-    
-    public void setPrice(float price){
-        this.price=price;
+
+    public void setPrice(float price) {
+        this.price = price;
     }
-    public float getPrice(){
+
+    public float getPrice() {
         return price;
     }
-    
-    @Column(nullable=false)
+
+    @Column(nullable = false)
     private int stock;
-    
-    public void setStock(int stock){
-        this.stock=stock;
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
-    
-    public int getStock(){
+
+    public int getStock() {
         return stock;
     }
 
-    
     @ManyToOne
-    @JoinColumn(name="categoryID")
+    @JoinColumn(name = "categoryID")
     Category categoryID;
 
     public Category getCategory() {
@@ -76,10 +69,10 @@ public class product extends EntityBase implements Serializable  {
     public void setCategory(Category categoryID) {
         this.categoryID = categoryID;
     }
-    
+
     @ManyToOne
-    @JoinColumn(name="providerID")
-    
+    @JoinColumn(name = "providerID")
+
     Provider provider;
 
     public Provider getProvider() {
@@ -89,18 +82,17 @@ public class product extends EntityBase implements Serializable  {
     public void setProvider(Provider provider) {
         this.provider = provider;
     }
-    
-        @Override
+    @OneToMany(mappedBy = "product")
+    List<Saleitem> saleItem;
+
+
+
+    @Override
     public String toString() {
-        return (this.getClass().getName()) + "id=" + id + " name="+name;
+        return "id=" + id + " name=" + name;
     }
-    
-    
-    
-   
-    
-    
-    
-    
-    
+
 }
+
+
+

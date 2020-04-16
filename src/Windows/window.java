@@ -5,6 +5,7 @@
  */
 package Windows;
 
+import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
@@ -13,11 +14,13 @@ import javax.swing.JFrame;
  */
 public class window extends javax.swing.JFrame {
 
-    /**
+    /** 
      * Creates new form window
      */
     public window() {
         initComponents();
+        this.setTitle("Menu");
+        
     }
 
     /**
@@ -32,8 +35,9 @@ public class window extends javax.swing.JFrame {
         BotonCategory = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButtonSale = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        Costumer = new javax.swing.JButton();
         BotonProvider = new javax.swing.JButton();
+        Costumer1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,7 +62,12 @@ public class window extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("jButton1");
+        Costumer.setText("Costumer");
+        Costumer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CostumerActionPerformed(evt);
+            }
+        });
 
         BotonProvider.setText("Category");
         BotonProvider.addActionListener(new java.awt.event.ActionListener() {
@@ -67,21 +76,26 @@ public class window extends javax.swing.JFrame {
             }
         });
 
+        Costumer1.setText("SaleItem");
+        Costumer1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Costumer1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(167, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4)
-                    .addComponent(BotonCategory)
-                    .addComponent(BotonProvider)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(6, 6, 6)
-                            .addComponent(jButtonSale))
-                        .addComponent(jButton2)))
+                .addContainerGap(162, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotonCategory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BotonProvider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonSale, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Costumer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Costumer1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(152, 152, 152))
         );
         layout.setVerticalGroup(
@@ -89,15 +103,17 @@ public class window extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(BotonProvider)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(BotonCategory)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonSale)
-                .addGap(18, 18, 18)
-                .addComponent(jButton4)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Costumer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Costumer1)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,6 +151,21 @@ public class window extends javax.swing.JFrame {
        sale.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButtonSaleActionPerformed
 
+    private void CostumerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CostumerActionPerformed
+        
+        windowCostumer costumer=new windowCostumer();
+        costumer.setVisible(true);
+        costumer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        costumer.setLocationRelativeTo(null);
+    }//GEN-LAST:event_CostumerActionPerformed
+
+    private void Costumer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Costumer1ActionPerformed
+        windowSaleItem saleItem=new windowSaleItem();
+        saleItem.setVisible(true);
+        saleItem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        saleItem.setLocationRelativeTo(null);
+    }//GEN-LAST:event_Costumer1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -143,8 +174,9 @@ public class window extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonCategory;
     private javax.swing.JButton BotonProvider;
+    private javax.swing.JButton Costumer;
+    private javax.swing.JButton Costumer1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonSale;
     // End of variables declaration//GEN-END:variables
 }
