@@ -199,6 +199,11 @@ public class windowProduct extends javax.swing.JFrame {
                 jTextBuscarMouseClicked(evt);
             }
         });
+        jTextBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextBuscarActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -460,7 +465,7 @@ public class windowProduct extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextBuscarMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        boolean numero= false;
+        
         List<Product> product=new ArrayList<>();
         Product productID;
         ProductRepositoryImp productRepository=new ProductRepositoryImp(entityManager);
@@ -500,8 +505,13 @@ public class windowProduct extends javax.swing.JFrame {
         jTextName.setText("");
         jTextPrecio.setText("");
         jTextStock.setText("");
+        jTextBuscar.setText("Buscar por ID o Por Nombre");
        
     }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextBuscarActionPerformed
 
     
     

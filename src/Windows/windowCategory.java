@@ -7,21 +7,70 @@ package Windows;
 
 import persistence.*;
 import entities.Category;
+import entities.Product;
+import entities.Provider;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author copad
  */
 public class windowCategory extends javax.swing.JFrame {
-
+    
+    private EntityManager entityManage;
+    private DefaultTableModel modelo=new DefaultTableModel();
     /**
      * Creates new form NewJFrame
      */
     public windowCategory() {
         initComponents();
+        EntityManageRepository entityManage=new EntityManageRepository();
+        this.entityManage=entityManage.getEntityManager();
+        ModeloTabla();
+        actualizarTabla();
+    }
+    public void actualizarTabla(){
+
+        
+        CategoryRepositoryImp categoryRepository=new CategoryRepositoryImp(entityManage);
+        String datos[] =new String[3];
+        try {
+            List<Category> ob = new ArrayList<>();
+            ob=categoryRepository.findAll();
+            
+            for(int i=0;i<ob.size();i++){
+                Category category=new Category();
+                category=ob.get(i);
+                datos[0]=String.valueOf(category.getId());
+                datos[1]=String.valueOf(category.getDescription());
+                datos[2]=String.valueOf(category.getName());
+                modelo.addRow(datos);
+            }
+            TablaCategory.setModel(modelo);
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+        }
+    
+    }
+    public void ModeloTabla() {
+
+        modelo.addColumn("id");
+        modelo.addColumn("Descripcion");
+        modelo.addColumn("Name");
+        TablaCategory.setModel(modelo);
+
+    }
+
+    public void limpiarTabla() {
+        for (int i = 0; i < TablaCategory.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
     }
 
     /**
@@ -35,27 +84,34 @@ public class windowCategory extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTNombre = new javax.swing.JTextField();
+        jTextNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTDescripcion = new javax.swing.JTextArea();
+        jTextDescripcion = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TablaCategory = new javax.swing.JTable();
+        jTextID = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jTextBuscar = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nombre");
 
-        jTNombre.addActionListener(new java.awt.event.ActionListener() {
+        jTextNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTNombreActionPerformed(evt);
+                jTextNombreActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Descripcion");
 
-        jTDescripcion.setColumns(20);
-        jTDescripcion.setRows(5);
-        jScrollPane1.setViewportView(jTDescripcion);
+        jTextDescripcion.setColumns(20);
+        jTextDescripcion.setRows(5);
+        jScrollPane1.setViewportView(jTextDescripcion);
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -64,41 +120,106 @@ public class windowCategory extends javax.swing.JFrame {
             }
         });
 
+        TablaCategory.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        TablaCategory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaCategoryMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TablaCategory);
+
+        jLabel3.setText("ID");
+
+        jButton2.setText("Actualizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jTextBuscar.setText("Buscar Nombre o ID");
+        jTextBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextBuscarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(56, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1)
-                        .addGap(262, 262, 262))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13))))
+                            .addComponent(jTextID, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                            .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton3))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(43, 43, 43)
+                    .addComponent(jButton3)
+                    .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(45, 45, 45))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(52, 52, 52)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(91, 91, 91))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,32 +236,94 @@ public class windowCategory extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTNombreActionPerformed
+    private void jTextNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTNombreActionPerformed
+    }//GEN-LAST:event_jTextNombreActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        
-        EntityManageRepository entityManage=new EntityManageRepository();
+        
 
-        CategoryRepositoryImp categoryRepository=new CategoryRepositoryImp(entityManage.getEntityManager());
+        CategoryRepositoryImp categoryRepository=new CategoryRepositoryImp(entityManage);
         Category category=new Category();
-        category.setName(jTNombre.getText());
-        category.setDescription(jTDescripcion.getText());
+        category.setName(jTextNombre.getText());
+        category.setDescription(jTextDescripcion.getText());
         categoryRepository.Save(category);
         categoryRepository.commit();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void TablaCategoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaCategoryMouseClicked
+        int seleccion=TablaCategory.rowAtPoint(evt.getPoint());
+        jTextID.setText(String.valueOf(TablaCategory.getValueAt(seleccion, 0)));
+        jTextDescripcion.setText(String.valueOf(TablaCategory.getValueAt(seleccion,1)));
+        jTextNombre.setText(String.valueOf(TablaCategory.getValueAt(seleccion,2)));
+    }//GEN-LAST:event_TablaCategoryMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        CategoryRepositoryImp categoryRepository=new CategoryRepositoryImp(entityManage);
+        Category category;
+        category=categoryRepository.fine(Integer.valueOf(jTextID.getText()));
+
+        category.setDescription(jTextDescripcion.getText());
+        category.setName(jTextNombre.getText());
+        
+        categoryRepository.Save(category);
+        categoryRepository.commit();
+        limpiarTabla();
+        actualizarTabla();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextBuscarMouseClicked
+        jTextBuscar.setText("");
+    }//GEN-LAST:event_jTextBuscarMouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        List<Category> category=new ArrayList<>();
+        Category categoryID;
+        CategoryRepositoryImp categoryRepository=new CategoryRepositoryImp(entityManage);
+        try {
+            int id = Integer.parseInt(jTextBuscar.getText());
+            categoryID = categoryRepository.fine(id);
+            limpiarTabla();
+            Object[] ob=new Object[3];
+                ob[0]=String.valueOf(categoryID.getId());
+                ob[1]=String.valueOf(categoryID.getDescription());
+                ob[2]=String.valueOf(categoryID.getName());
+                
+            modelo.addRow(ob);
+            
+        } catch (Exception e) {
+            String name = jTextBuscar.getText();
+            category = categoryRepository.findByName(name);
+            for (int i = 0; i < category.size(); i++) {
+                limpiarTabla();
+                Object[] ob = new Object[3];
+                ob[0] = String.valueOf(category.get(i).getId());
+                ob[1] = String.valueOf(category.get(i).getDescription());
+                ob[2] = String.valueOf(category.get(i).getName());
+
+                modelo.addRow(ob);
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaCategory;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTDescripcion;
-    private javax.swing.JTextField jTNombre;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextBuscar;
+    private javax.swing.JTextArea jTextDescripcion;
+    private javax.swing.JTextField jTextID;
+    private javax.swing.JTextField jTextNombre;
     // End of variables declaration//GEN-END:variables
 }
