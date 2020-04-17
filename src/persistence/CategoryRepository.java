@@ -14,4 +14,5 @@ import java.util.List;
  */
 public interface CategoryRepository extends Repository<Category>{
     List<Category> findByName(String name);
+    List<Category> findAll();
 }

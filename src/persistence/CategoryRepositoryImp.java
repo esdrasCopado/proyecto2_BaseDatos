@@ -31,5 +31,11 @@ public class CategoryRepositoryImp extends RepositoryBase<Category> implements C
         q.setParameter(1, name);
         return q.getResultList();
     }
+
+    @Override
+    public List<Category> findAll() {
+        List q=entityManager.createNativeQuery("SELECT * FROM category ",Category.class).getResultList();
+        return q;
+    }
     
 }

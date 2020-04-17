@@ -59,6 +59,8 @@ public abstract class RepositoryBase<T extends EntityBase > implements Repositor
         if(!transaction.isActive())
             transaction.begin();
     }
+
+
     
 
     

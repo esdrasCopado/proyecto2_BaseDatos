@@ -13,6 +13,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import persistence.EntityManageRepository;
+import persistence.SaleRepositoryImp;
 
 /**
  *
@@ -20,13 +22,15 @@ import javax.persistence.Persistence;
  */
 public class windowSale extends javax.swing.JFrame {
     
-    EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("Proyecto2PU");
-    EntityManager entityManager = managerFactory.createEntityManager();
+    EntityManager entityManager;
     /**
      * Creates new form windowSale
      */
     public windowSale() {
+        
         initComponents();
+        EntityManageRepository entityManager=new EntityManageRepository();
+        this.entityManager=entityManager.getEntityManager();
         getCostomers();
     }
 
@@ -130,16 +134,16 @@ public class windowSale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-
+        
+        SaleRepositoryImp saleRepository=new SaleRepositoryImp(entityManager);
         Sale sale=new Sale();
         sale.setDate(jDateChooser.getDate());
         sale.setDiscout(Float.parseFloat(jTextDiscount.getText()));
         sale.setTotal(Float.parseFloat(jTextFieldTotal.getText()));
         sale.setCostomer((Costomer)jComboBox1.getSelectedItem());
-        entityManager.getTransaction().begin();
-        entityManager.persist(sale);
-        entityManager.getTransaction().commit();
-        
+
+        saleRepository.Save(sale);
+        saleRepository.commit();
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed
  public void getCostomers(){

@@ -4,17 +4,15 @@
  * and open the template in the editor.
  */
 package persistence;
-import entities.EntityBase;
+
+import entities.Product;
+import java.util.List;
+
 /**
  *
  * @author copad
  */
-public interface Repository<T extends EntityBase>{
-    
-    T fine(int id);
-    T Save(T entity);
-    
-    void delete(T entity);
-    void commit();
-    
+public interface ProductRepository extends Repository<Product>{
+    List<Product> finedByName(String name);
+    List<Product> findAll();
 }

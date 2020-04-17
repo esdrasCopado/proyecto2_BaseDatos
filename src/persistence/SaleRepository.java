@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 package persistence;
-import entities.EntityBase;
+
+import entities.Sale;
+import java.util.List;
+
 /**
  *
  * @author copad
  */
-public interface Repository<T extends EntityBase>{
-    
-    T fine(int id);
-    T Save(T entity);
-    
-    void delete(T entity);
-    void commit();
-    
+public interface SaleRepository extends Repository<Sale>{
+
 }

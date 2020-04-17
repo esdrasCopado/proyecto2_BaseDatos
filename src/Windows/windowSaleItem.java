@@ -14,6 +14,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import persistence.EntityManageRepository;
+import persistence.SaleItemRepositoryImp;
 
 /**
  *
@@ -24,12 +26,14 @@ public class windowSaleItem extends javax.swing.JFrame {
     /**
      * Creates new form windowSaleItem
      */
-    EntityManagerFactory managerFactory = Persistence.createEntityManagerFactory("Proyecto2PU");
-    EntityManager entityManager = managerFactory.createEntityManager();
+    
+    EntityManager entityManager;
     
     
     public windowSaleItem() {
         initComponents();
+        EntityManageRepository entityManager=new EntityManageRepository();
+        this.entityManager=entityManager.getEntityManager();
         getProduct();
         getSale();
     }
@@ -189,7 +193,7 @@ public class windowSaleItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        SaleItemRepositoryImp saleItemRepository=new SaleItemRepositoryImp(entityManager);
         Saleitem saleItem=new Saleitem();
         saleItem.setProduct((Product)jComboBoxProduct.getSelectedItem());
         saleItem.setSale((Sale)jComboBoxSale.getSelectedItem());
@@ -197,10 +201,9 @@ public class windowSaleItem extends javax.swing.JFrame {
         saleItem.setQuantity(Integer.parseInt(jTextFieldQuantity.getText()));
         saleItem.setTotal(Float.parseFloat(jTextFieldTotal.getText()));
         
+        saleItemRepository.Save(saleItem);
+        saleItemRepository.commit();
         
-        entityManager.getTransaction().begin();
-        entityManager.persist(saleItem);
-        entityManager.getTransaction().commit();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

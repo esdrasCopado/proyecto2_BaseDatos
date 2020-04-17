@@ -9,6 +9,8 @@ import entities.Provider;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import persistence.EntityManageRepository;
+import persistence.ProviderRepositoryImp;
 
 /**
  *
@@ -129,9 +131,8 @@ public class windowProvider extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       EntityManagerFactory managerFactory=Persistence.createEntityManagerFactory("Proyecto2PU");
-       EntityManager entityManager=managerFactory.createEntityManager();
-       entityManager.getTransaction().begin();
+        EntityManageRepository entityManager=new EntityManageRepository();
+        ProviderRepositoryImp providerRepository=new ProviderRepositoryImp(entityManager.getEntityManager());
        
        Provider provider=new Provider();
        provider.setName(jTextName.getText());
@@ -139,8 +140,8 @@ public class windowProvider extends javax.swing.JFrame {
        provider.setPhone(jTextPhone.getText());
        provider.setWebSite(jTextWebSite.getText());
        
-       entityManager.persist(provider);
-       entityManager.getTransaction().commit();
+       providerRepository.Save(provider);
+       providerRepository.commit();
        
        
     }//GEN-LAST:event_jButton1ActionPerformed

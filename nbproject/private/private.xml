@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/persistence/CategoryRepository.java</file>
-            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/entities/Sale.java</file>
+            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/persistence/ProductRepositoryImp.java</file>
+            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/persistence/RepositoryBase.java</file>
             <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/Windows/windowProduct.java</file>
-            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/proyecto2/Proyecto2.java</file>
-            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/persistence/CategoryRepositoryImp.java</file>
+            <file>file:/C:/Users/copad/Documents/NetBeansProjects/Proyecto2/src/persistence/Repository.java</file>
         </group>
     </open-files>
 </project-private>
