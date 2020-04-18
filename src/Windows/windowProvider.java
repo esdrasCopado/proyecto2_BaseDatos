@@ -5,10 +5,15 @@
  */
 package Windows;
 
+import entities.Category;
 import entities.Provider;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.table.DefaultTableModel;
+import persistence.CategoryRepositoryImp;
 import persistence.EntityManageRepository;
 import persistence.ProviderRepositoryImp;
 
@@ -17,13 +22,60 @@ import persistence.ProviderRepositoryImp;
  * @author copad
  */
 public class windowProvider extends javax.swing.JFrame {
-
+    EntityManager entityManager;
+    private DefaultTableModel modelo=new DefaultTableModel();
     /**
      * Creates new form windowProvider
      */
     public windowProvider() {
         initComponents();
+        EntityManageRepository entityManager=new EntityManageRepository();
+        this.entityManager=entityManager.getEntityManager();
+        ModeloTabla();
+        actualizarTabla();
+        
     }
+    public void actualizarTabla() {
+
+        ProviderRepositoryImp providerRepository = new ProviderRepositoryImp(entityManager);
+        String datos[] = new String[5];
+        try {
+            List<Provider> ob = new ArrayList<>();
+            ob = providerRepository.findAll();
+
+            for (int i = 0; i < ob.size(); i++) {
+                Provider provider = new Provider();
+                provider = ob.get(i);
+                datos[0] = String.valueOf(provider.getId());
+                datos[1] = String.valueOf(provider.getName());
+                datos[2] = String.valueOf(provider.getAddress());
+                datos[3] = String.valueOf(provider.getPhone());
+                datos[4] = String.valueOf(provider.getWebSite());
+                modelo.addRow(datos);
+            }
+            TablaProvider.setModel(modelo);
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+        }
+
+    }
+    public void ModeloTabla() {
+
+        modelo.addColumn("id");
+        modelo.addColumn("nombre");
+        modelo.addColumn("direccion");
+        modelo.addColumn("telefono");
+        modelo.addColumn("sitio web");
+        TablaProvider.setModel(modelo);
+
+    }
+    public void limpiarTabla() {
+        for (int i = 0; i < TablaProvider.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+    }
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,13 +91,27 @@ public class windowProvider extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextName = new javax.swing.JTextField();
+        jTextID = new javax.swing.JTextField();
         jTextAddress = new javax.swing.JTextField();
         jTextWebSite = new javax.swing.JTextField();
         jTextPhone = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TablaProvider = new javax.swing.JTable();
+        jTextBuscar = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jTextName = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("nombre ");
 
@@ -55,9 +121,10 @@ public class windowProvider extends javax.swing.JFrame {
 
         jLabel4.setText("sitio web");
 
-        jTextName.addActionListener(new java.awt.event.ActionListener() {
+        jTextID.setEditable(false);
+        jTextID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextNameActionPerformed(evt);
+                jTextIDActionPerformed(evt);
             }
         });
 
@@ -65,6 +132,60 @@ public class windowProvider extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        TablaProvider.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        TablaProvider.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaProviderMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(TablaProvider);
+
+        jTextBuscar.setText("Buscar Nombre o ID");
+        jTextBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextBuscarMouseClicked(evt);
+            }
+        });
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Actualizar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jTextName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextNameActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("ID");
+
+        jButton3.setText("Refresh Table");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -80,40 +201,71 @@ public class windowProvider extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel3)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5))
                         .addGap(38, 38, 38)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextWebSite, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                             .addComponent(jTextPhone)
                             .addComponent(jTextAddress)
-                            .addComponent(jTextName)))
+                            .addComponent(jTextID)
+                            .addComponent(jTextName, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
-                        .addComponent(jButton1)))
-                .addContainerGap(103, Short.MAX_VALUE))
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonBuscar)))
+                .addContainerGap(42, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(143, 143, 143))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextWebSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(42, 42, 42))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonBuscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextWebSite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1))))
+                .addGap(2, 2, 2)
+                .addComponent(jButton3)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,25 +295,118 @@ public class windowProvider extends javax.swing.JFrame {
        providerRepository.Save(provider);
        providerRepository.commit();
        
+       limpiarTabla();
+       actualizarTabla();
+       
        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextIDActionPerformed
+
+    private void TablaProviderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaProviderMouseClicked
+        int seleccion=TablaProvider.rowAtPoint(evt.getPoint());
+        jTextID.setText(String.valueOf(TablaProvider.getValueAt(seleccion, 0)));
+        jTextName.setText(String.valueOf(TablaProvider.getValueAt(seleccion,1)));
+        jTextAddress.setText(String.valueOf(TablaProvider.getValueAt(seleccion,2)));
+        jTextPhone.setText(String.valueOf(TablaProvider.getValueAt(seleccion, 3)));
+        jTextWebSite.setText(String.valueOf(TablaProvider.getValueAt(seleccion, 4)));
+    }//GEN-LAST:event_TablaProviderMouseClicked
+
+    private void jTextBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextBuscarMouseClicked
+        jTextBuscar.setText("");
+    }//GEN-LAST:event_jTextBuscarMouseClicked
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        List<Provider> provider = new ArrayList<>();
+        Provider providerID;
+        ProviderRepositoryImp providerRepository = new ProviderRepositoryImp(entityManager);
+        try {
+            int id = Integer.parseInt(jTextBuscar.getText());
+            providerID = providerRepository.fine(id);
+            limpiarTabla();
+            Object[] ob = new Object[5];
+            ob[0] = String.valueOf(providerID.getId());
+            ob[1] = String.valueOf(providerID.getName());
+            ob[2] = String.valueOf(providerID.getAddress());
+            ob[3] = String.valueOf(providerID.getPhone());
+            ob[4] = String.valueOf(providerID.getWebSite());
+
+            modelo.addRow(ob);
+
+        } catch (Exception e) {
+            String name = jTextBuscar.getText();
+            provider = providerRepository.findByName(name);
+            for (int i = 0; i < provider.size(); i++) {
+                limpiarTabla();
+                Object[] ob = new Object[5];
+                ob[0] = String.valueOf(provider.get(i).getId());
+                ob[1] = String.valueOf(provider.get(i).getName());
+                ob[2] = String.valueOf(provider.get(i).getAddress());
+                ob[3] = String.valueOf(provider.get(i).getPhone());
+                ob[4] = String.valueOf(provider.get(i).getWebSite());
+
+                modelo.addRow(ob);
+            }
+        }
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jTextNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextNameActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ProviderRepositoryImp providerRepository=new ProviderRepositoryImp(entityManager);
+        Provider provider;
+        provider=providerRepository.fine(Integer.valueOf(jTextID.getText()));
+
+        provider.setName(jTextName.getText());
+        provider.setAddress(jTextAddress.getText());
+        provider.setPhone(jTextPhone.getText());
+        provider.setWebSite(jTextWebSite.getText());
+        
+        providerRepository.Save(provider);
+        providerRepository.commit();
+        limpiarTabla();
+        actualizarTabla();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        
+        jTextID.setText("");
+        jTextName.setText("");
+        jTextAddress.setText("");
+        jTextPhone.setText("");
+        jTextWebSite.setText("");
+        jTextBuscar.setText("Buscar Nombre o ID");
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        limpiarTabla();
+        actualizarTabla();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
      */
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaProvider;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextAddress;
+    private javax.swing.JTextField jTextBuscar;
+    private javax.swing.JTextField jTextID;
     private javax.swing.JTextField jTextName;
     private javax.swing.JTextField jTextPhone;
     private javax.swing.JTextField jTextWebSite;

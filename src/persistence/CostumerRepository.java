@@ -5,13 +5,14 @@
  */
 package persistence;
 
-import entities.Costomer;
+import entities.Costumer;
 import java.util.List;
 
 /**
  *
  * @author copad
  */
-public interface CostumerRepository extends Repository<Costomer>{
-    List<Costomer> findByName(String name);
+public interface CostumerRepository extends Repository<Costumer>{
+    List<Costumer> findByName(String name);
+    List<Costumer> findAll();
 }

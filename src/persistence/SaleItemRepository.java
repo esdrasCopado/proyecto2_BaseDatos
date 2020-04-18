@@ -6,11 +6,12 @@
 package persistence;
 
 import entities.Saleitem;
+import java.util.List;
 
 /**
  *
  * @author copad
  */
 public interface  SaleItemRepository extends Repository<Saleitem>{
-    
+    List<Saleitem> findAll();
 }

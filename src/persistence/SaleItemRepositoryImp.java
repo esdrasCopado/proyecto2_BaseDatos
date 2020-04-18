@@ -5,7 +5,9 @@
  */
 package persistence;
 
+import entities.Product;
 import entities.Saleitem;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -16,6 +18,12 @@ public class SaleItemRepositoryImp extends RepositoryBase<Saleitem> implements S
 
     public SaleItemRepositoryImp(EntityManager entityManager) {
         super(entityManager, Saleitem.class);
+    }
+
+    @Override
+    public List<Saleitem> findAll() {
+        List q= entityManager.createNativeQuery("SELECT * FROM saleitem ", this.cls).getResultList();
+        return q;
     }
     
 }

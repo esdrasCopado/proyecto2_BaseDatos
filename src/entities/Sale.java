@@ -47,7 +47,7 @@ public class Sale extends EntityBase implements Serializable {
     
     @ManyToOne
     @JoinColumn(name="CostomerID")
-    Costomer costomer;
+    Costumer costomer;
     
     @OneToMany(mappedBy = "sale")
     List<Saleitem> saleItem;
@@ -60,11 +60,11 @@ public class Sale extends EntityBase implements Serializable {
         this.saleItem = saleItem;
     }
     
-    public Costomer getCostomer() {
+    public Costumer getCostomer() {
         return costomer;
     }
 
-    public void setCostomer(Costomer costomer) {
+    public void setCostomer(Costumer costomer) {
         this.costomer = costomer;
     }
     

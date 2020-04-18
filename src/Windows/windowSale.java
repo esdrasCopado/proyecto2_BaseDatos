@@ -5,15 +5,22 @@
  */
 package Windows;
 
-import entities.Costomer;
+import entities.Category;
+import entities.Costumer;
+import entities.Product;
 import entities.Provider;
 import entities.Sale;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.table.DefaultTableModel;
+import persistence.CostumerRepositoryImp;
 import persistence.EntityManageRepository;
+import persistence.ProductRepositoryImp;
 import persistence.SaleRepositoryImp;
 
 /**
@@ -22,16 +29,65 @@ import persistence.SaleRepositoryImp;
  */
 public class windowSale extends javax.swing.JFrame {
     
+    static private List<Costumer> obCostomer = new ArrayList<>();
     EntityManager entityManager;
+    private DefaultTableModel modelo = new DefaultTableModel();
+
     /**
      * Creates new form windowSale
      */
     public windowSale() {
-        
+
         initComponents();
-        EntityManageRepository entityManager=new EntityManageRepository();
-        this.entityManager=entityManager.getEntityManager();
+        EntityManageRepository entityManager = new EntityManageRepository();
+        this.entityManager = entityManager.getEntityManager();
         getCostomers();
+        ModeloTabla();
+        actualizarTabla();
+    }
+
+    public void actualizarTabla() {
+
+        SaleRepositoryImp saleRepository = new SaleRepositoryImp(entityManager);
+        String datos[] = new String[5];
+        try {
+            List<Sale> ob = new ArrayList<>();
+            ob = saleRepository.findAll();
+
+            for (int i = 0; i < ob.size(); i++) {
+                Sale sale = new Sale();
+                sale = ob.get(i);
+                datos[0] = String.valueOf(sale.getId());
+                datos[1] = String.valueOf(sale.getDate());
+                datos[2] = String.valueOf(sale.getDiscout());
+                datos[3] = String.valueOf(sale.getTotal());
+                datos[4] = String.valueOf(sale.getCostomer().getId());
+
+                modelo.addRow(datos);
+            }
+            TablaSale.setModel(modelo);
+        } catch (Exception e) {
+            System.out.println(e.getCause());
+        }
+
+    }
+
+    public void ModeloTabla() {
+
+        modelo.addColumn("id");
+        modelo.addColumn("fecha");
+        modelo.addColumn("descuento");
+        modelo.addColumn("total");
+        modelo.addColumn("consumidor");
+        TablaSale.setModel(modelo);
+
+    }
+
+    public void limpiarTabla() {
+        for (int i = 0; i < TablaSale.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
     }
 
     /**
@@ -51,10 +107,24 @@ public class windowSale extends javax.swing.JFrame {
         jTextFieldTotal = new javax.swing.JTextField();
         jDateChooser = new com.toedter.calendar.JDateChooser();
         jButtonGuardar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<Costomer>();
+        jComboBox1 = new javax.swing.JComboBox<entities.Costumer>();
         jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaSale = new javax.swing.JTable();
+        jTextID = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButtonBuscar = new javax.swing.JButton();
+        jTextBuscar = new javax.swing.JTextField();
+        jButtonActualizar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setText("Fecha");
 
@@ -71,63 +141,148 @@ public class windowSale extends javax.swing.JFrame {
 
         jLabel5.setText("Costomer");
 
+        TablaSale.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        TablaSale.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TablaSaleMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(TablaSale);
+
+        jTextID.setEditable(false);
+
+        jLabel4.setText("ID");
+
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        jTextBuscar.setText("Buscar");
+        jTextBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTextBuscarMouseClicked(evt);
+            }
+        });
+
+        jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(47, 47, 47)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonGuardar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonActualizar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextID)
                             .addComponent(jTextDiscount)
                             .addComponent(jDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                             .addComponent(jTextFieldTotal)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 497, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonBuscar)
+                .addGap(100, 100, 100))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBuscar)
+                    .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(17, 17, 17)
-                .addComponent(jButtonGuardar)
-                .addContainerGap(67, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jButtonGuardar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonActualizar))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14))
         );
+
+        jButton3.setText("Refresh Table");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 36, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(214, 214, 214))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -140,19 +295,91 @@ public class windowSale extends javax.swing.JFrame {
         sale.setDate(jDateChooser.getDate());
         sale.setDiscout(Float.parseFloat(jTextDiscount.getText()));
         sale.setTotal(Float.parseFloat(jTextFieldTotal.getText()));
-        sale.setCostomer((Costomer)jComboBox1.getSelectedItem());
+        sale.setCostomer((Costumer)jComboBox1.getSelectedItem());
 
         saleRepository.Save(sale);
         saleRepository.commit();
         
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void TablaSaleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaSaleMouseClicked
+        Costumer costomer;
+        
+
+        int seleccion=TablaSale.rowAtPoint(evt.getPoint());
+        jTextID.setText(String.valueOf(TablaSale.getValueAt(seleccion, 0)));
+        jDateChooser.setDate(new Date(String.valueOf(TablaSale.getValueAt(seleccion,1 ))));
+        jTextDiscount.setText(String.valueOf(TablaSale.getValueAt(seleccion, 2)));
+        jTextFieldTotal.setText(String.valueOf(TablaSale.getValueAt(seleccion, 3)));
+        
+        for (int i = 0; i < obCostomer.size(); i++) {
+
+            costomer = (Costumer) obCostomer.get(i);
+            String ob = String.valueOf(TablaSale.getValueAt(seleccion, 4));
+            if (costomer.getId() == Integer.valueOf(ob)) {
+                jComboBox1.setSelectedItem(costomer);
+            }
+
+        }
+    }//GEN-LAST:event_TablaSaleMouseClicked
+
+    private void jTextBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextBuscarMouseClicked
+        jTextBuscar.setText("");
+    }//GEN-LAST:event_jTextBuscarMouseClicked
+
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        Sale sale;
+        SaleRepositoryImp saleRepository=new SaleRepositoryImp(entityManager);
+        int id=Integer.parseInt(jTextBuscar.getText());
+        sale=saleRepository.fine(id);
+        limpiarTabla();
+        Object[] ob=new Object[5];
+        ob[0]=String.valueOf(sale.getId());
+        ob[1]=String.valueOf(sale.getDate());
+        ob[2]=String.valueOf(sale.getDiscout());
+        ob[3]=String.valueOf(sale.getTotal());
+        ob[4]=String.valueOf(sale.getCostomer().getId());
+        modelo.addRow(ob);
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        SaleRepositoryImp SaleRepository=new SaleRepositoryImp(entityManager);
+        Sale sale;
+        sale=SaleRepository.fine(Integer.valueOf(jTextID.getText()));
+
+        sale.setDate(jDateChooser.getDate());
+        sale.setDiscout(Float.parseFloat(jTextDiscount.getText()));
+        sale.setTotal(Float.parseFloat(jTextFieldTotal.getText()));
+        sale.setCostomer((Costumer)jComboBox1.getSelectedItem());
+        
+        
+        SaleRepository.Save(sale);
+        SaleRepository.commit();
+        limpiarTabla();
+        actualizarTabla();
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        jTextBuscar.setText("Buscar");
+        jTextDiscount.setText("");
+        jTextFieldTotal.setText("");
+        jTextID.setText("");
+        jDateChooser.setDate(null);
+       
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        limpiarTabla();
+        actualizarTabla();
+    }//GEN-LAST:event_jButton3ActionPerformed
  public void getCostomers(){
-         List<Object> ob=new ArrayList<>();
-        ob = entityManager.createNativeQuery("SELECT * FROM costomer ",Costomer.class).getResultList();
-        Costomer costomer;
+     
+        CostumerRepositoryImp costumerRepository=new CostumerRepositoryImp(entityManager);
+        obCostomer=costumerRepository.findAll();
+        Costumer costomer;
     try {
-        for (int i = 0; i < ob.size(); i++) {
-            costomer=(Costomer)ob.get(i);
+        for (int i = 0; i < obCostomer.size(); i++) {
+            costomer=(Costumer)obCostomer.get(i);
             jComboBox1.addItem(costomer);
         }
     } catch (Exception e) {
@@ -161,15 +388,23 @@ public class windowSale extends javax.swing.JFrame {
  }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaSale;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonActualizar;
+    private javax.swing.JButton jButtonBuscar;
     private javax.swing.JButton jButtonGuardar;
-    private javax.swing.JComboBox<Costomer> jComboBox1;
+    private javax.swing.JComboBox<entities.Costumer> jComboBox1;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextBuscar;
     private javax.swing.JTextField jTextDiscount;
     private javax.swing.JTextField jTextFieldTotal;
+    private javax.swing.JTextField jTextID;
     // End of variables declaration//GEN-END:variables
 }

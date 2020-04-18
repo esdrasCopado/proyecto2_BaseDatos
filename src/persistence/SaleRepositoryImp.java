@@ -19,6 +19,12 @@ public class SaleRepositoryImp extends RepositoryBase<Sale> implements SaleRepos
         super(entityManager, Sale.class);
     }
 
+    @Override
+    public List<Sale> findAll() {
+        List q= entityManager.createNativeQuery("SELECT * FROM sale ", this.cls).getResultList();
+        return q;
+    }
+
 
     
 }

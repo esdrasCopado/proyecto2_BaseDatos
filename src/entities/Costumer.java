@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "costomer")
 
-public class Costomer extends EntityBase implements Serializable {
+public class Costumer extends EntityBase implements Serializable {
     
     private static final long serialVersionUID = 1L;
     @Basic(optional = false)
@@ -53,14 +53,14 @@ public class Costomer extends EntityBase implements Serializable {
         this.sale = sale;
     }
     
-    public Costomer() {
+    public Costumer() {
     }
 
-    public Costomer(Integer id) {
+    public Costumer(Integer id) {
         this.id = id;
     }
 
-    public Costomer(Integer id, String rfc, String name, String address, String phone) {
+    public Costumer(Integer id, String rfc, String name, String address, String phone) {
         this.id = id;
         this.rfc = rfc;
         this.name = name;

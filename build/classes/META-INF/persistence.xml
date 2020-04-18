@@ -6,8 +6,8 @@
     <class>entities.Provider</class>
     <class>entities.Product</class>
     <class>entities.Sale</class>
-    <class>entities.Costomer</class>
     <class>entities.Saleitem</class>
+    <class>entities.Costumer</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/proyecto2?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

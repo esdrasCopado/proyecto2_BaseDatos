@@ -34,7 +34,7 @@ public class ProductRepositoryImp extends RepositoryBase<Product> implements Pro
 
     @Override
     public List<Product> findAll() {
-       List q= entityManager.createNativeQuery("SELECT * FROM product ", Product.class).getResultList();
+       List q= entityManager.createNativeQuery("SELECT * FROM product ", this.cls).getResultList();
        return q;
     }
     

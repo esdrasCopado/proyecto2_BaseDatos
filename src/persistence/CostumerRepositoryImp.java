@@ -6,7 +6,8 @@
 package persistence;
 
 import entities.Category;
-import entities.Costomer;
+import entities.Costumer;
+import entities.Product;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,14 +16,14 @@ import javax.persistence.Query;
  *
  * @author copad
  */
-public class CostumerRepositoryImp extends RepositoryBase<Costomer> implements CostumerRepository{
+public class CostumerRepositoryImp extends RepositoryBase<Costumer> implements CostumerRepository{
 
     public CostumerRepositoryImp(EntityManager entityManager) {
-        super(entityManager, Costomer.class);
+        super(entityManager, Costumer.class);
     }
 
     @Override
-    public List<Costomer> findByName(String name) {
+    public List<Costumer> findByName(String name) {
                 if(name==null||name.isEmpty()){
             
         }
@@ -30,6 +31,12 @@ public class CostumerRepositoryImp extends RepositoryBase<Costomer> implements C
         Query q= this.entityManager.createNativeQuery("SELECT * FROM costomer WHERE Name=? ",this.cls);
         q.setParameter(1, name);
         return q.getResultList();
+    }
+
+    @Override
+    public List<Costumer> findAll() {
+        List q= entityManager.createNativeQuery("SELECT * FROM costomer ", this.cls).getResultList();
+        return q;
     }
 
 

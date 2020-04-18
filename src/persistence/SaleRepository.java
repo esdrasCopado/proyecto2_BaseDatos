@@ -13,5 +13,5 @@ import java.util.List;
  * @author copad
  */
 public interface SaleRepository extends Repository<Sale>{
-
+    List<Sale> findAll();
 }

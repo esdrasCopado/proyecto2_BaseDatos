@@ -34,7 +34,7 @@ public class ProviderRepositoryImp extends RepositoryBase<Provider> implements P
 
     @Override
     public List<Provider> findAll() {
-        List q=entityManager.createNativeQuery("SELECT * FROM provider ",Provider.class).getResultList();
+        List q=entityManager.createNativeQuery("SELECT * FROM provider ",this.cls).getResultList();
         return q;
     }
 

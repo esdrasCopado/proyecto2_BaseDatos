@@ -10,7 +10,7 @@ import Windows.windowCategory;
 import Windows.windowProvider;
 
 import entities.Category;
-import entities.Costomer;
+import entities.Costumer;
 
 
 import java.awt.ComponentOrientation;
