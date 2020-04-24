@@ -13,27 +13,27 @@ import javax.persistence.Persistence;
  *
  * @author copad
  */
-public class EntityManageRepository {
-    
+public class ManagerFactoryRepository {
     private EntityManagerFactory managerFactory;
-    private EntityManager entityManager;
     
-    
-    public EntityManageRepository(){
-
+    public ManagerFactoryRepository() {
+        
+        
     }
-    
+    public void createEntityManagerFactory(){
+    managerFactory = Persistence.createEntityManagerFactory("Proyecto2PU");
+    }
+    public EntityManager createEntityManager(){
+        return managerFactory.createEntityManager();
+    }
 
-    
-    
     public EntityManagerFactory getManagerFactory() {
         return managerFactory;
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
+    public void setManagerFactory(EntityManagerFactory managerFactory) {
+        this.managerFactory = managerFactory;
     }
-    
     
     
 }

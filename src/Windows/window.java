@@ -7,19 +7,21 @@ package Windows;
 
 import java.awt.Color;
 import javax.swing.JFrame;
+import persistence.ManagerFactoryRepository;
 
 /**
  *
  * @author copad
  */
 public class window extends javax.swing.JFrame {
-
+    private ManagerFactoryRepository managerFactory;
     /** 
      * Creates new form window
      */
-    public window() {
+    public window(ManagerFactoryRepository managerFactory) {
         initComponents();
         this.setTitle("Menu");
+        this.managerFactory=managerFactory;
         
     }
 
@@ -120,7 +122,7 @@ public class window extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonProviderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonProviderActionPerformed
-        windowCategory frame = new windowCategory();
+        windowCategory frame = new windowCategory(managerFactory);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -128,7 +130,7 @@ public class window extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonProviderActionPerformed
 
     private void BotonCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCategoryActionPerformed
-        windowProvider provider = new windowProvider();
+        windowProvider provider = new windowProvider(managerFactory);
 
         provider.setVisible(true);
         provider.setLocationRelativeTo(null);
@@ -137,7 +139,7 @@ public class window extends javax.swing.JFrame {
     }//GEN-LAST:event_BotonCategoryActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        windowProduct product=new windowProduct();
+        windowProduct product=new windowProduct(managerFactory);
         
         product.setVisible(true);
         product.setLocationRelativeTo(null);
@@ -145,7 +147,7 @@ public class window extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButtonSaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaleActionPerformed
-       windowSale sale=new windowSale();
+       windowSale sale=new windowSale(managerFactory);
        sale.setVisible(true);
        sale.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
        sale.setLocationRelativeTo(null);
@@ -153,14 +155,14 @@ public class window extends javax.swing.JFrame {
 
     private void CostumerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CostumerActionPerformed
         
-        windowCostumer costumer=new windowCostumer();
+        windowCostumer costumer=new windowCostumer(managerFactory);
         costumer.setVisible(true);
         costumer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         costumer.setLocationRelativeTo(null);
     }//GEN-LAST:event_CostumerActionPerformed
 
     private void Costumer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Costumer1ActionPerformed
-        windowSaleItem saleItem=new windowSaleItem();
+        windowSaleItem saleItem=new windowSaleItem(managerFactory);
         saleItem.setVisible(true);
         saleItem.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         saleItem.setLocationRelativeTo(null);

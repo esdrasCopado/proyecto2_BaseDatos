@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import persistence.CategoryRepositoryImp;
 import persistence.CostumerRepositoryImp;
 import persistence.EntityManageRepository;
+import persistence.ManagerFactoryRepository;
 
 /**
  *
@@ -24,14 +25,17 @@ import persistence.EntityManageRepository;
 public class windowCostumer extends javax.swing.JFrame {
 
     private DefaultTableModel modelo=new DefaultTableModel();
-    EntityManager entityManage;
+    private EntityManager entityManage;
+    private ManagerFactoryRepository managerFactory;
     /**
      * Creates new form windowCostumer
      */
-    public windowCostumer() {
+    public windowCostumer(ManagerFactoryRepository managerFactory) {
         initComponents();
         EntityManageRepository entityManage=new EntityManageRepository();
+        this.managerFactory=managerFactory;
         this.entityManage=entityManage.getEntityManager();
+        this.entityManage=this.managerFactory.createEntityManager();
         ModeloTabla();
         actualizarTabla();
     }

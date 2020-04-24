@@ -23,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 import persistence.CategoryRepositoryImp;
 import persistence.EntityManageRepository;
+import persistence.ManagerFactoryRepository;
 import persistence.ProductRepositoryImp;
 import persistence.ProviderRepositoryImp;
 import persistence.ProductRepositoryImp;
@@ -39,15 +40,18 @@ public class windowProduct extends javax.swing.JFrame {
     private List<Category> obCategory=new ArrayList<>();
     private List<Provider> obProviders=new ArrayList<>();
     private DefaultTableModel modelo=new DefaultTableModel();
+    private ManagerFactoryRepository managerFactory;
     /**
      * Creates new form windowProduct
      */
-    public windowProduct() {
+    public windowProduct(ManagerFactoryRepository managerFactory) {
 
         initComponents();
         this.setTitle("Producto");
         EntityManageRepository entityManager = new EntityManageRepository();
+        this.managerFactory = managerFactory;
         this.entityManager = entityManager.getEntityManager();
+        this.entityManager = this.managerFactory.createEntityManager();
         ModeloTabla();
         actualizarTabla();
         getCategory();

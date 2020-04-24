@@ -30,6 +30,7 @@ import javax.swing.JFrame;
 import persistence.CategoryRepositoryImp;
 import persistence.CostumerRepositoryImp;
 import persistence.EntityManageRepository;
+import persistence.ManagerFactoryRepository;
 
 /**
  *
@@ -46,8 +47,10 @@ public class Proyecto2 {
      */
     public static void main(String[] args) {
 
-        
-            window ventana=new window();
+            ManagerFactoryRepository managerFactory=new ManagerFactoryRepository();
+            managerFactory.createEntityManagerFactory();
+            
+            window ventana=new window(managerFactory);
             
             ventana.setVisible(true);
             ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

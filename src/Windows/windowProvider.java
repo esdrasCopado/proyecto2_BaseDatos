@@ -15,6 +15,7 @@ import javax.persistence.Persistence;
 import javax.swing.table.DefaultTableModel;
 import persistence.CategoryRepositoryImp;
 import persistence.EntityManageRepository;
+import persistence.ManagerFactoryRepository;
 import persistence.ProviderRepositoryImp;
 
 /**
@@ -22,15 +23,19 @@ import persistence.ProviderRepositoryImp;
  * @author copad
  */
 public class windowProvider extends javax.swing.JFrame {
-    EntityManager entityManager;
+    
+    private EntityManager entityManager;
+    private ManagerFactoryRepository managerFactory;
     private DefaultTableModel modelo=new DefaultTableModel();
     /**
      * Creates new form windowProvider
      */
-    public windowProvider() {
+    public windowProvider(ManagerFactoryRepository managerFactory) {
         initComponents();
         EntityManageRepository entityManager=new EntityManageRepository();
+        this.managerFactory=managerFactory;
         this.entityManager=entityManager.getEntityManager();
+        this.entityManager=this.managerFactory.createEntityManager();
         ModeloTabla();
         actualizarTabla();
         

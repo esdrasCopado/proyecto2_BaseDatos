@@ -20,6 +20,7 @@ import javax.persistence.Persistence;
 import javax.swing.table.DefaultTableModel;
 import persistence.CostumerRepositoryImp;
 import persistence.EntityManageRepository;
+import persistence.ManagerFactoryRepository;
 import persistence.ProductRepositoryImp;
 import persistence.SaleRepositoryImp;
 
@@ -29,18 +30,21 @@ import persistence.SaleRepositoryImp;
  */
 public class windowSale extends javax.swing.JFrame {
     
-    static private List<Costumer> obCostomer = new ArrayList<>();
-    EntityManager entityManager;
+    private List<Costumer> obCostomer = new ArrayList<>();
+    private EntityManager entityManager;
+    private ManagerFactoryRepository managerFactory;
     private DefaultTableModel modelo = new DefaultTableModel();
 
     /**
      * Creates new form windowSale
      */
-    public windowSale() {
+    public windowSale(ManagerFactoryRepository managerFactory) {
 
         initComponents();
         EntityManageRepository entityManager = new EntityManageRepository();
+        this.managerFactory=managerFactory;
         this.entityManager = entityManager.getEntityManager();
+        this.entityManager=this.managerFactory.createEntityManager();
         getCostomers();
         ModeloTabla();
         actualizarTabla();

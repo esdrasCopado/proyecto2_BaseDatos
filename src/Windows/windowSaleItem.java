@@ -17,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.swing.table.DefaultTableModel;
 import persistence.EntityManageRepository;
+import persistence.ManagerFactoryRepository;
 import persistence.ProductRepositoryImp;
 import persistence.SaleItemRepositoryImp;
 import persistence.SaleRepositoryImp;
@@ -31,16 +32,19 @@ public class windowSaleItem extends javax.swing.JFrame {
      * Creates new form windowSaleItem
      */
     
-    EntityManager entityManager;
-    private DefaultTableModel modelo=new DefaultTableModel();
-    private List<Product> obProduct=new ArrayList<>();
-    private List<Sale> obSale=new ArrayList<>();
+    private EntityManager entityManager;
+    private DefaultTableModel modelo = new DefaultTableModel();
+    private List<Product> obProduct = new ArrayList<>();
+    private List<Sale> obSale = new ArrayList<>();
+    private ManagerFactoryRepository managerFactory;
     
     
-    public windowSaleItem() {
+    public windowSaleItem(ManagerFactoryRepository managerFactory) {
         initComponents();
         EntityManageRepository entityManager = new EntityManageRepository();
+        this.managerFactory=managerFactory;
         this.entityManager = entityManager.getEntityManager();
+        this.entityManager = this.managerFactory.createEntityManager();
         getProduct();
         getSale();
         ModeloTabla();

@@ -23,14 +23,17 @@ import javax.swing.table.DefaultTableModel;
 public class windowCategory extends javax.swing.JFrame {
     
     private EntityManager entityManage;
+    private ManagerFactoryRepository managerFactory;
     private DefaultTableModel modelo=new DefaultTableModel();
     /**
      * Creates new form NewJFrame
      */
-    public windowCategory() {
+    public windowCategory(ManagerFactoryRepository managerFactory) {
         initComponents();
         EntityManageRepository entityManage=new EntityManageRepository();
+        this.managerFactory=managerFactory;
         this.entityManage=entityManage.getEntityManager();
+        this.entityManage=this.managerFactory.createEntityManager();
         ModeloTabla();
         actualizarTabla();
     }
